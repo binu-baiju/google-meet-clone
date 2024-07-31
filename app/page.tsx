@@ -1,26 +1,41 @@
 "use client";
-import { useEffect } from "react";
-import io from "socket.io-client";
-import { useSocket } from "../context/socket";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
-const Home = () => {
-  const socket = useSocket();
-  useEffect(() => {
-    // const socketInitializer = async () => {
-    // await fetch("/api/socket");
-    // socket = io("http://localhost:4000");
+// import styles from "@/styles/home.module.css";
+import { useState } from "react";
 
-    socket?.on("connect", () => {
-      console.log("hello");
+export default function Home() {
+  const router = useRouter();
+  const [roomId, setRoomId] = useState("");
+  // const router = useRouter();
+  // const { query } = router;
+  // const roomId = query.roomId;
 
-      console.log("Socket id:", socket.id);
-    });
-    // };
+  const createAndJoin = () => {
+    const roomId = uuidv4();
+    router.push(`/${roomId}`);
+  };
 
-    // socketInitializer();
-  }, [socket]);
-
-  return <h2>Hello</h2>;
-};
-
-export default Home;
+  const joinRoom = () => {
+    if (roomId) router.push(`/${roomId}`);
+    else {
+      alert("Please provide a valid room id");
+    }
+  };
+  return (
+    <div className="">
+      <h1>Google Meet Clone</h1>
+      <div className="">
+        <input
+          placeholder="Enter Room ID"
+          value={roomId}
+          onChange={(e) => setRoomId(e?.target?.value)}
+        />
+        <button onClick={joinRoom}>Join Room</button>
+      </div>
+      <span>--------------- OR ---------------</span>
+      <button onClick={createAndJoin}>Create a new room</button>
+    </div>
+  );
+}

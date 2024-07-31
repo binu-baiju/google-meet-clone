@@ -25,13 +25,17 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   const [socket, setSocket] = useState<SocketContextType>(null);
 
   useEffect(() => {
-    const connection: Socket = io("http://localhost:4000");
+    const URL =
+      process.env.NODE_ENV === "production"
+        ? "https://google-meet-clone-1.onrender.com"
+        : "http://localhost:4000";
+    const connection: Socket = io(URL);
     console.log("socket connection", connection);
     setSocket(connection);
 
     connection.on("connect_error", async (err) => {
       console.log("Error establishing socket", err);
-      await fetch("http://localhost:4000");
+      await fetch(URL);
     });
 
     return () => {

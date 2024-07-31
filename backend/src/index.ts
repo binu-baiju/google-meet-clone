@@ -9,7 +9,7 @@ const isDev = app.settings.env === "development";
 
 const URL = isDev
   ? "http://localhost:3000"
-  : "https://google-meet-clone-9vton69rl-binubaijus-projects.vercel.app";
+  : "https://google-meet-clone-puce.vercel.app";
 
 const io = new Server(server, {
   cors: {

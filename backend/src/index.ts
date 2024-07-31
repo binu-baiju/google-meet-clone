@@ -3,10 +3,17 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 
 const server = createServer();
+const app = express();
+
+const isDev = app.settings.env === "development";
+
+const URL = isDev
+  ? "http://localhost:3000"
+  : "https://google-meet-clone-9vton69rl-binubaijus-projects.vercel.app";
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: [URL, "http://localhost:3000"],
     credentials: true,
     methods: ["POST", "GET"],
   },

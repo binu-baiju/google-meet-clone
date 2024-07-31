@@ -1,6 +1,7 @@
 const express = require("express");
 import { Server } from "socket.io";
 import { createServer } from "http";
+const cors = require("cors");
 
 const server = createServer();
 const app = express();
@@ -10,6 +11,8 @@ const isDev = app.settings.env === "development";
 const URL = isDev
   ? "http://localhost:3000"
   : "https://google-meet-clone-puce.vercel.app";
+
+app.use(cors({ origin: [URL, "http://localhost:3000"], credentials: true }));
 
 const io = new Server(server, {
   cors: {

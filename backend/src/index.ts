@@ -3,8 +3,9 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 const cors = require("cors");
 
-const server = createServer();
 const app = express();
+
+const server = createServer(app);
 
 const isDev = app.settings.env === "development";
 
